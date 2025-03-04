@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Friend Cards</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f8f8;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            color: #222;
+            font-size: 26px;
+            margin-top: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            padding: 10px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 180px;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: #555;
+            bottom: 0;
+            left: 0;
+            transition: 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .card:hover::before {
+            height: 6px;
+            background: #333;
+        }
+        .card h3 {
+            color: #333;
+            font-size: 20px;
+            margin: 0;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 16px;
+            margin: 8px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: 0.3s ease-in-out;
+            font-weight: 500;
+        }
+        #addBtn {
+            background: #100f0f;
+            color: white;
+        }
+        #removeBtn {
+            background: #121010;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.85;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Dynamic Friend Cards</h2>
+    <div class="buttons">
+        <button id="addBtn">➕ Add Friend</button>
+        <button id="removeBtn">➖ Remove Friend</button>
+    </div>
+    <div class="container" id="cardContainer"></div>
+
+    <script>
+        let friends = ["Anushka", "Rahul", "Priya", "Amit", "Sneha"];
+
+        function generateCards() {
+            const container = document.getElementById("cardContainer");
+            container.innerHTML = "";
+
+            for (let i = 0; i < friends.length; i++) {
+                let card = document.createElement("div");
+                card.className = "card";
+                card.innerHTML = `<h3>${friends[i]}</h3>`;
+                container.appendChild(card);
+            }
+        }
+
+        document.getElementById("addBtn").addEventListener("click", () => {
+            let newFriend = prompt("Enter your friend's name:");
+            if (newFriend) {
+                friends.push(newFriend);
+                generateCards();
+            }
+        });
+
+        document.getElementById("removeBtn").addEventListener("click", () => {
+            if (friends.length > 0) {
+                friends.pop();
+                generateCards();
+            } else {
+                alert("No more friends to remove!");
+            }
+        });
+
+        generateCards();
+    </script>
+
+</body>
+</html>
